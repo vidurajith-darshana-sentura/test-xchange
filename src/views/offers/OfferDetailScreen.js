@@ -9,7 +9,7 @@ const OfferDetailScreen = (props) => {
 
     const navigation = useNavigation();
     const [offerDetail, setOfferDetail] = useState({});
-   
+
 
 
 
@@ -34,7 +34,7 @@ const OfferDetailScreen = (props) => {
             </View>
             <View style={styles.baseForm}>
                 <Text style={{ fontSize: 25, paddingHorizontal: 10, paddingTop: 10, marginBottom: 20 }}>
-                    Offer Detail
+                    Offer Details
                 </Text>
             </View>
 
@@ -86,13 +86,13 @@ const OfferDetailScreen = (props) => {
                     : null
             }
 
-           
-            
+
+
             <View style = {{height: 50}}/>
             <Button
                 title="Continue"
                 color="#20B2AA"
-                onPress={() => {}}
+                onPress={() =>  props?.navigation.navigate("Orders")}
             />
 
 

@@ -16,6 +16,7 @@ import {dimensions} from "../styles/constants";
 import {useDispatch, useSelector} from "react-redux";
 import {getNotificationsByUserAction} from "../redux/actions/NotificationAction";
 import {REMOVE_DUPLICATE_OBJECT} from "../util/JSArray";
+import Loader from "../components/Loader";
 
 const NotificationScreen = ({navigation}) => {
 
@@ -121,7 +122,7 @@ const NotificationScreen = ({navigation}) => {
                         </Card>
                     )}
                 />
-
+                <Loader isLoading={notificationsLoading} />
             </Container>
         </View>
 

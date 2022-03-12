@@ -1,20 +1,24 @@
-import React, { useState } from 'react';
-import {View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, 
+import React, {useEffect, useState} from 'react';
+import {View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity,
         PermissionsAndroid, Dimensions, Modal, Button} from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { RadioButton, Checkbox } from 'react-native-paper';
 import Geolocation from 'react-native-geolocation-service';
 import { showToast } from '../../configurations/toastConfigurations';
-import { greenColor } from '../../styles/constants';
+import {dimensions, greenColor} from '../../styles/constants';
 import MapView , {Marker} from 'react-native-maps';
+import {validateEmailAddress} from "../../util/validator";
+import {useDispatch, useSelector} from "react-redux";
+import {getTrackingMethodsAction} from "../../redux/actions/orderActions";
+import Loader from "../../components/Loader";
 
-const checkboxOptions = [
+const checkboxOptions1 = [
     {label: "DHL", value: "dhl"},
     {label: "UPS", value: "ups"},
     {label: "UPSP", value: "upsp"}
 ]
 
-const OrdersScreen = () => {
+const OrdersScreen = ({navigation}) => {
     const [checked, setChecked] = React.useState('shipment');
     const [shipmentType, setShipmentType] = useState(null);
     const [postalCode, setPostalCode] = useState(null);
@@ -22,6 +26,34 @@ const OrdersScreen = () => {
     const [address, setAddress] = useState({lat: 0, lng: 0});
     const [selectedCoordinate, setSelectedCoordinate] = useState({lat: 0, lng: 0});
     const [isMapModalVisible, setMapModelVisible] = useState(false);
+    const [checkboxOptions, setCheckboxOptions] = useState([]);
+
+    let dispatch = useDispatch();
+
+    let trackingMethodsSuccess = useSelector(state => state.orderState.getTrackingMethodsSuccess);
+    let trackingMethodsFailed = useSelector(state => state.orderState.getTrackingMethodsFailed);
+    let trackingMethodsLoading = useSelector(state => state.orderState.getTrackingMethodsLoading);
+
+    useEffect(() => {
+        dispatch(getTrackingMethodsAction())
+    }, []);
+
+    useEffect(() => {
+        if (trackingMethodsSuccess) {
+            console.log(trackingMethodsSuccess?.result)
+            let data = [];
+            trackingMethodsSuccess?.result?.map(item => {
+                if (item?.method === "LOCATION") return;
+                 data.push({label: item?.method, value: item?.id})
+            });
+
+            setCheckboxOptions(data);
+
+        } else if (trackingMethodsFailed) {
+
+        }
+
+    }, [trackingMethodsSuccess, trackingMethodsFailed ]);
 
 
     const getLocation = async () => {
@@ -31,7 +63,7 @@ const OrdersScreen = () => {
                 (position) =>{
                     const currentLon = position.coords.longitude;
                     const currentLat = position.coords.latitude;
-    
+
                     let address = {
                         lat: currentLat,
                         lng: currentLon
@@ -69,13 +101,13 @@ const OrdersScreen = () => {
                 />
             </View>
             <View style={styles.baseForm}>
-                <Text style={{ fontSize: 25, paddingHorizontal: 10, paddingTop: 10, marginBottom: 20 }}>
-                    Past Orders
+                <Text style={{ fontSize: 35, paddingHorizontal: 10, paddingTop: 10, marginBottom: 20, fontWeight: 'bold' }}>
+                     453.25 USD
                 </Text>
             </View>
 
             <Text>
-                Merchant type
+                Delivery type
             </Text>
             <View style = {{flexDirection:"row", alignItems:"center", marginBottom: 20}}>
                 <RadioButton
@@ -128,7 +160,7 @@ const OrdersScreen = () => {
 
                 null
             }
-            
+
 
 
             <TextInput
@@ -155,7 +187,7 @@ const OrdersScreen = () => {
                 }}
                 placeholder={'Mobile Number'} />
 
-            <TouchableOpacity 
+            <TouchableOpacity
                 onPress = {getLocation}
                 style = {{paddingVertical: 20}}>
                 <TextInput
@@ -172,19 +204,26 @@ const OrdersScreen = () => {
 
             </TouchableOpacity>
 
+            <View style={{marginTop: dimensions.heightLevel2}} />
+
+            <Button
+                isDisable={false}
+                onPress={() => {}}
+                color={greenColor}
+                title="CONFIRM"
+            />
 
 
-
-            <Modal 
+            <Modal
                 transparent
-                style = {{height: Dimensions.get("screen").height, width:Dimensions.get("screen").width, 
+                style = {{height: Dimensions.get("screen").height, width:Dimensions.get("screen").width,
                         backgroundColor: `rgba(0,0,0,0.5)`, justifyContent:"center", alignItems:"center"}}
                 visible = {isMapModalVisible} >
-                
-                <View style = {{backgroundColor:"white", height: "70%", width: "90%", 
-                                marginVertical:"30%", alignSelf:"center",borderRadius: 10, 
+
+                <View style = {{backgroundColor:"white", height: "70%", width: "90%",
+                                marginVertical:"30%", alignSelf:"center",borderRadius: 10,
                                 elevation: 10, justifyContent:"space-between", overflow:"hidden"}}>
-                    
+
                     <MapView
                         style = {{height: "85%", width:"100%"}}
                         initialRegion={{
@@ -202,26 +241,26 @@ const OrdersScreen = () => {
                             })
                         }}
                     >
-                        <Marker 
-                            coordinate = {{latitude: selectedCoordinate.lat, 
+                        <Marker
+                            coordinate = {{latitude: selectedCoordinate.lat,
                                           longitude: selectedCoordinate.lng,
                                           latitudeDelta: 0.0922,
                                           longitudeDelta: 0.0421}}
                         />
                     </MapView>
-                    
+
                     <View style = {{marginHorizontal: 20, marginBottom: 20}}>
-                        <Button 
+                        <Button
                             color = {greenColor}
                             onPress = {() => setMapModelVisible(false)}
                             title = "DONE"
                         />
                     </View>
-                  
 
                 </View>
 
             </Modal>
+                <Loader isLoading = {trackingMethodsLoading} />
         </ScrollView>
     )
 }

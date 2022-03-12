@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux';
 import { userLogout } from '../services/httpConfig';
 import {greenColor} from '../styles/constants';
 import {resetAuthState} from '../redux/actions/authActions'
+import {resetProfileState} from "../redux/actions/profileActions";
 
 const ProfileScreen = () => {
     const dispatch = useDispatch();
