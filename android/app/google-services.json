@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1044267637424",
+    "project_id": "xchange-c0ae9",
+    "storage_bucket": "xchange-c0ae9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1044267637424:android:d60bfaa1b5bf5e813d7975",
+        "android_client_info": {
+          "package_name": "com.sentura.xchange"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1044267637424-0rqj98ktqc5lh9hlu75dnmji57ca4pih.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZ8QqCSZNAqzgLK95Uqa-3SignOZVaq-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1044267637424-0rqj98ktqc5lh9hlu75dnmji57ca4pih.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
