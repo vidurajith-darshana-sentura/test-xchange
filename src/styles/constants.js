@@ -91,3 +91,19 @@ export const dimensions = {
     paddingLevel9: width * 17 / 100,
     paddingLevel10: width * 20 / 100
 }
+
+export const getShadowsV1 = {
+    elevation: 10,
+    zIndex: 10,
+    shadowColor: 'black',
+    shadowOffset: {width: 2, height: 2},
+    shadowOpacity: 0.25,
+}
+
+export const getShadowsV2 = {
+    elevation: 1,
+    zIndex: 10,
+    shadowColor: 'black',
+    shadowOffset: {width: 2, height: 2},
+    shadowOpacity: 0.25,
+}

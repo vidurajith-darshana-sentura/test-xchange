@@ -17,81 +17,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {getNotificationsByUserAction} from "../redux/actions/NotificationAction";
 import {REMOVE_DUPLICATE_OBJECT} from "../util/JSArray";
 
-const Notifications = [
-    {
-        id: '1',
-
-        userImg: require('../assets/notification.jpg'),
-
-        NotificationText:
-            'Buying services for work? Get the best experience with a few quick questions. Whats your industry ?',
-        NotificationTime: '1 day ago',
-    },
-    {
-        id: '2',
-
-        userImg: require('../assets/notification.jpg'),
-        NotificationTime: '1 month ago',
-        NotificationText:
-            'A friend you referred castla just signed up! Once they buy you get rewarded',
-    },
-    {
-        id: '3',
-
-        userImg: require('../assets/notification.jpg'),
-        NotificationTime: '6 months ago',
-        NotificationText:
-            'Your seller account is disabled and your requests are not posting',
-    },
-    {
-        id: '4',
-
-        userImg: require('../assets/notification.jpg'),
-        NotificationTime: '6 months ago',
-        NotificationText:
-            'Get inspired by real posts that helped small businesses connect with their customers',
-
-    },
-    {
-        id: '5',
-
-        userImg: require('../assets/notification.jpg'),
-        NotificationTime: '6 months ago',
-        NotificationText:
-            'Get inspired by real posts that helped small businesses connect with their customers',
-
-    },
-    {
-        id: '6',
-
-        userImg: require('../assets/notification.jpg'),
-        NotificationTime: '6 months ago',
-        NotificationText:
-            'Get inspired by real posts that helped small businesses connect with their customers',
-
-    },
-
-    {
-        id: '7',
-
-        userImg: require('../assets/notification.jpg'),
-        NotificationTime: '6 months ago',
-        NotificationText:
-            'Get inspired by real posts that helped small businesses connect with their customers',
-
-    },
-    {
-        id: '8',
-
-        userImg: require('../assets/notification.jpg'),
-        NotificationTime: '6 months ago',
-        NotificationText:
-            'Get inspired by real posts that helped small businesses connect with their customers',
-
-    },
-
-];
-
 const NotificationScreen = ({navigation}) => {
 
     let dispatch = useDispatch();
@@ -129,7 +54,6 @@ const NotificationScreen = ({navigation}) => {
 
     function loadMoreHandler() {
         if (totalPages !== currentPage) {
-            console.log(totalPages, ' - ', currentPage)
 
             setCurrentPage(currentPage);
             let data = {pageNumber: currentPage, pageSize: pageSize};
@@ -179,8 +103,8 @@ const NotificationScreen = ({navigation}) => {
                     onEndReached={loadMoreHandler}
                     onEndReachedThreshold ={0.1}
                     renderItem={({item}) => (
-                        // <Card onPress={() => navigation.navigate('Chat', {userName: item.userName})}>
-                        <Card>
+                        <Card onPress={() => navigation.navigate('SubNotification', {item: item})}>
+                        {/*<Card>*/}
                             <UserInfo>
                                 <UserImgWrapper>
                                     <UserImg source={require('../assets/notification.jpg')}/>

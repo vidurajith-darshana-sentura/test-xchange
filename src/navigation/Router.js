@@ -26,8 +26,8 @@ import MessageStack from "./AppStack/MessageStack";
 import NotificationScreen from "../views/NotificationScreen";
 import ViewOffersScreen from "../views/offers/ViewOffersScreen";
 import OfferDetailScreen from "../views/offers/OfferDetailScreen";
-import OrdersScreen from '../views/orders/OrdersScreen';
 import OrderScreen from '../views/orders/OrdersScreen';
+import SubNotification from '../views/NotificationSubScreen';
 
 const Stack = createStackNavigator();
 const hide = {headerShown: false};
@@ -63,6 +63,7 @@ const Router = () => {
             <Stack.Screen name="ViewOffers" component={ViewOffersScreen} options={hide}/>
             <Stack.Screen name="OfferDetail" component={OfferDetailScreen} options={hide}/>
             <Stack.Screen name="Orders" component={OrderScreen} options={hide}/>
+            <Stack.Screen name="SubNotification" component={SubNotification} options={hide}/>
 
         </Stack.Navigator>
     );
