@@ -1,4 +1,4 @@
-export const baseUrl = 'http://192.168.8.101:8020';
+export const baseUrl = 'http://103.125.216.56:8020';
 
 export const signInUrl = '/auth/api/v1/signIn';
 export const signUpUrl = '/auth/api/v1/signUp';

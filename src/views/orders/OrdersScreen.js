@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, 
+import {View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity,
         PermissionsAndroid, Dimensions, Modal, Button} from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { RadioButton, Checkbox } from 'react-native-paper';
@@ -7,6 +7,7 @@ import Geolocation from 'react-native-geolocation-service';
 import { showToast } from '../../configurations/toastConfigurations';
 import { greenColor } from '../../styles/constants';
 import MapView , {Marker} from 'react-native-maps';
+import {validateMobileNumber} from "../../util/validator";
 
 const checkboxOptions = [
     {label: "DHL", value: "dhl"},
@@ -31,7 +32,7 @@ const OrdersScreen = () => {
                 (position) =>{
                     const currentLon = position.coords.longitude;
                     const currentLat = position.coords.latitude;
-    
+
                     let address = {
                         lat: currentLat,
                         lng: currentLon
@@ -128,7 +129,7 @@ const OrdersScreen = () => {
 
                 null
             }
-            
+
 
 
             <TextInput
@@ -150,12 +151,13 @@ const OrdersScreen = () => {
                 }}
                 value={mobileNumber}
                 style={{
-                    borderColor: '#d3d3d3', borderBottomWidth: 1,
+                    borderColor: mobileNumber && validateMobileNumber(mobileNumber) ? '#d3d3d3' : 'red', borderBottomWidth: 1,
                     padding: 5, paddingTop: 20, fontSize: 15, width: "100%"
                 }}
                 placeholder={'Mobile Number'} />
+                <Text style={{fontSize: 10,color: 'red'}}>Mobile number should have 10 digits</Text>
 
-            <TouchableOpacity 
+            <TouchableOpacity
                 onPress = {getLocation}
                 style = {{paddingVertical: 20}}>
                 <TextInput
@@ -175,16 +177,16 @@ const OrdersScreen = () => {
 
 
 
-            <Modal 
+            <Modal
                 transparent
-                style = {{height: Dimensions.get("screen").height, width:Dimensions.get("screen").width, 
+                style = {{height: Dimensions.get("screen").height, width:Dimensions.get("screen").width,
                         backgroundColor: `rgba(0,0,0,0.5)`, justifyContent:"center", alignItems:"center"}}
                 visible = {isMapModalVisible} >
-                
-                <View style = {{backgroundColor:"white", height: "70%", width: "90%", 
-                                marginVertical:"30%", alignSelf:"center",borderRadius: 10, 
+
+                <View style = {{backgroundColor:"white", height: "70%", width: "90%",
+                                marginVertical:"30%", alignSelf:"center",borderRadius: 10,
                                 elevation: 10, justifyContent:"space-between", overflow:"hidden"}}>
-                    
+
                     <MapView
                         style = {{height: "85%", width:"100%"}}
                         initialRegion={{
@@ -202,22 +204,22 @@ const OrdersScreen = () => {
                             })
                         }}
                     >
-                        <Marker 
-                            coordinate = {{latitude: selectedCoordinate.lat, 
+                        <Marker
+                            coordinate = {{latitude: selectedCoordinate.lat,
                                           longitude: selectedCoordinate.lng,
                                           latitudeDelta: 0.0922,
                                           longitudeDelta: 0.0421}}
                         />
                     </MapView>
-                    
+
                     <View style = {{marginHorizontal: 20, marginBottom: 20}}>
-                        <Button 
+                        <Button
                             color = {greenColor}
                             onPress = {() => setMapModelVisible(false)}
                             title = "DONE"
                         />
                     </View>
-                  
+
 
                 </View>
 
