@@ -17,4 +17,5 @@ export const createOfferRequestUrl = "/offer/api/v1/create";
 export const getOfferListUrl = "/offer/api/v1/get/"
 export const getNotificationsByUserUrl = "/notifications/api/v1/getNotificationsByUser/"
 export const getTrackingMethodsUrl = "/common/api/v1/getTrackingMethods"
+export const getOrdersByUserUrl = "/order/api/v1/getOrdersByUser/"
 

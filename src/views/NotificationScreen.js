@@ -14,7 +14,7 @@ import {
 } from '../styles/NotificationStyle';
 import {dimensions} from "../styles/constants";
 import {useDispatch, useSelector} from "react-redux";
-import {getNotificationsByUserAction} from "../redux/actions/NotificationAction";
+import {getNotificationsByUserAction} from "../redux/actions/notificationAction";
 import {REMOVE_DUPLICATE_OBJECT} from "../util/JSArray";
 import Loader from "../components/Loader";
 

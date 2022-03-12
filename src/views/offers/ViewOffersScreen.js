@@ -12,8 +12,9 @@ let pageNumber = -1;
 const ROWS_PER_PAGE = 20;
 let momentumScrollBegin = true;
 
-const ViewOffersScreen = () => {
+const ViewOffersScreen = ({route}) => {
 
+    const { isBuyer } = route?.params;
     const navigation = useNavigation();
     const dispatch = useDispatch();
 
@@ -23,8 +24,8 @@ const ViewOffersScreen = () => {
 
     useEffect(() => {
         pageNumber++;
-        getOffers(true);
 
+        console.warn(isBuyer)
         return () => {
             pageNumber = -1;
             dispatch(resetGetOfferListRequest());

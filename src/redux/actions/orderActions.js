@@ -1,9 +1,26 @@
 import { httpGet } from "../../services/httpServices";
-import {createOfferRequestUrl, getTrackingMethodsUrl} from "../../configurations/urlConfigurations";
-import {getOrdersActionType, getTrackingMethodsActionType} from '../actionTypes/orderActionTypes'
+import {
+    createOfferRequestUrl,
+    getNotificationsByUserUrl,
+    getOrdersByUserUrl,
+    getTrackingMethodsUrl
+} from "../../configurations/urlConfigurations";
+import {
+    getOrdersActionType,
+    getOrdersByUserActionType,
+    getTrackingMethodsActionType
+} from '../actionTypes/orderActionTypes'
 import {resetActionTypes} from "../actionTypes/resetActionTypes";
 import {createOfferRequestActionType} from "../actionTypes/offerActionTypes";
 
+
+export const getOrdersByUserAction = ({pageNumber, pageSize}) => {
+    return httpGet({
+        isAuth: true,
+        url: `${getOrdersByUserUrl}${global.userId}/${pageNumber}/${pageSize}`,
+        actionTypes: getOrdersByUserActionType,
+    })
+}
 
 export const getTrackingMethodsAction = () => {
     return httpGet({

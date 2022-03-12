@@ -28,6 +28,8 @@ import ViewOffersScreen from "../views/offers/ViewOffersScreen";
 import OfferDetailScreen from "../views/offers/OfferDetailScreen";
 import OrderScreen from '../views/orders/OrdersScreen';
 import SubNotification from '../views/NotificationSubScreen';
+import PastOrderScreen from '../views/orders/PastOrderScreen';
+import OrderDetailsScreen from '../views/orders/OrderDetailsScreen';
 
 const Stack = createStackNavigator();
 const hide = {headerShown: false};
@@ -64,6 +66,8 @@ const Router = () => {
             <Stack.Screen name="OfferDetail" component={OfferDetailScreen} options={hide}/>
             <Stack.Screen name="Orders" component={OrderScreen} options={hide}/>
             <Stack.Screen name="SubNotification" component={SubNotification} options={hide}/>
+            <Stack.Screen name="PastOrder" component={PastOrderScreen} options={hide}/>
+            <Stack.Screen name="OrderDetails" component={OrderDetailsScreen} options={hide}/>
 
         </Stack.Navigator>
     );

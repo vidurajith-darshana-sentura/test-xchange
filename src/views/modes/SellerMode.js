@@ -54,11 +54,11 @@ const SellerMode = () => {
 
                     <Text style={styles.header}>Activities</Text>
                     <TouchableRipple onPress={() => {
-                         navigation.navigate('CreateSellerOffer')
-                        
+                         navigation.navigate('PastOrder',  {isBuyer: false})
+
                     }} style={styles.ripple}>
                         <View style={styles.menuItem}>
-                            <Icon name="tools" color={greenColor} size={25}/>
+                            <Icon name="cart" color={greenColor} size={25}/>
                             <Text style={styles.menuItemText}>Past Orders</Text>
                             <Icon name="chevron-right" color={greenColor} size={25}
                                   style={{position: 'absolute', right: 15, top: 15}}/>
@@ -67,10 +67,10 @@ const SellerMode = () => {
                     </TouchableRipple>
 
                     <TouchableRipple onPress={() => {
-                        navigation.navigate("ViewOffers");
+                        navigation.navigate("ViewOffers",  {isBuyer: false});
                     }} style={styles.ripple}>
                         <View style={styles.menuItem}>
-                            <Icon name="account" color={greenColor} size={25}/>
+                            <Icon name="offer" color={greenColor} size={25}/>
                             <Text style={styles.menuItemText}>Your Offers</Text>
                             <Icon name="chevron-right" color={greenColor} size={25}
                                   style={{position: 'absolute', right: 15, top: 15}}/>
