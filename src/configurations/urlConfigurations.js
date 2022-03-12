@@ -15,4 +15,5 @@ export const getOpenBuyerRequestsUrl = "/request/api/v1/find/open-buyer-requests
 export const getCommissionRateUrl = "/common/api/v1/getActiveCommissionRate";
 export const createOfferRequestUrl = "/offer/api/v1/create";
 export const getOfferListUrl = "/offer/api/v1/get/"
+export const getNotificationsByUserUrl = "/notifications/api/v1/getNotificationsByUser/"
 

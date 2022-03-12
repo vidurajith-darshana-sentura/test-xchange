@@ -5,6 +5,7 @@ import buyerReducer from './buyerReducer';
 import sellerReducer from './sellerReducer';
 import commonReducer from './commonReducer';
 import offerReducer from './offerReducer';
+import notificationReducer from './notificationReducer';
 
 export default combineReducers({
     authState: authReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
     buyerState: buyerReducer,
     sellerState: sellerReducer,
     commonState: commonReducer,
-    offerState: offerReducer
+    offerState: offerReducer,
+    notificationState: notificationReducer,
 })
