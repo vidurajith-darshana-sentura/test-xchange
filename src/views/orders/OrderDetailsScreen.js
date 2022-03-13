@@ -18,23 +18,24 @@ const OrderDetailsScreen = (props) => {
         }
     }, [])
 
-    return (
-        <ScrollView style={styles.background}>
-            <View style={styles.content}>
-                <FontAwesome5.Button
-                    name="chevron-left"
-                    size={20}
-                    backgroundColor="#fff"
-                    color="black"
-                    onPress={() => navigation.goBack()}
+    return (<View style={styles.container}>
+        <View style={styles.content}>
+            <FontAwesome5.Button
+                name="chevron-left"
+                size={20}
+                backgroundColor="#fff"
+                color="black"
+                onPress={() => navigation.goBack()}
 
-                />
-            </View>
-            <View style={styles.baseForm}>
-                <Text style={{fontSize: 25, paddingHorizontal: 10, paddingTop: 10, marginBottom: 20}}>
-                    Order Details
-                </Text>
-            </View>
+            />
+        </View>
+        <View style={{paddingHorizontal: 10,}}>
+            <Text style={{fontSize: 25, paddingHorizontal: 10, paddingTop: 10, marginBottom: 10}}>
+                Order Details
+            </Text>
+        </View>
+        <ScrollView style={styles.background}>
+
 
 
             <PastOrderItem
@@ -58,6 +59,7 @@ const OrderDetailsScreen = (props) => {
 
 
         </ScrollView>
+        </View>
     )
 }
 
@@ -78,6 +80,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         marginTop: 30,
+        paddingHorizontal: 10,
         width: "100%"
     },
 
