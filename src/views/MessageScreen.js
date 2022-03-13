@@ -22,7 +22,7 @@ const MessageScreen = ({ navigation }) => {
   const [partners, setPartners] = useState([]);
 
   useEffect(() => {
-    (async function () {
+   async function callNow() {
       let data = await getChatterListHandler();
 
       let arr = [];
@@ -40,10 +40,12 @@ const MessageScreen = ({ navigation }) => {
         arr.push(temp);
 
       })
-
-
       setPartners(arr)
-    }) ();
+    }
+
+
+    callNow();
+
   }, []);
 
 

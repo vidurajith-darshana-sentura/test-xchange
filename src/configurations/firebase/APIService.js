@@ -112,10 +112,10 @@ const sendPrivateMessage = ({ receiverId = 0,
     firestore()
         .collection('privateChat')
         .add({
-            receiverId: receiverId,
+            receiverId: Number(receiverId),
             receiverName: receiverName,
             receiverImage: receiverImage,
-            senderId: senderId,
+            senderId: Number(senderId),
             senderName: senderName,
             senderImage: senderImage,
             message: message,
@@ -133,17 +133,14 @@ const sendPrivateMessage = ({ receiverId = 0,
 
 const getChatterListHandler = async () => {
     let get = await firestore().collection('privateChat').get();
-    // console.log("---------------------")
-    // console.log("---------------------")
+
     let filter = get?._docs?.filter(item => {
         let data = item?._data
-        if ((data.senderId == global.userId || data.receiverId === global.userId)) {
+        if ((data.senderId === global.userId || data.receiverId === global.userId)) {
             return item;
         }
     });
-    // console.log(filter)
-    // console.log("---------------------")
-    // console.log("---------------------")
+
 
     let data =[];
 
@@ -172,143 +169,6 @@ const getChatterListHandler = async () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-const saveConversationHandler = ({
-                                     receiverId = 0,
-                                     receiverName = "",
-                                     receiverImage = "",
-                                     senderId = 0,
-                                     senderName = "",
-                                     senderImage = "",
-                                     // message = ""
-                                 }) => {
-    firestore()
-        .collection('openConversation')
-        .add({
-            receiverId,
-            receiverName,
-            receiverImage,
-            senderId,
-            senderName,
-            senderImage,
-            // message,
-            dateTime: firestore.FieldValue.serverTimestamp(),
-        })
-        .then(() => {
-            // nothing
-        }).catch(error => {
-        console.log(error)
-    });
-}
-
-
-
-
-
-
-const getConversationsHandler = (myID, getValueHandler) => {
-    firestore()
-        .collection('openConversation')
-        .where('receiverId', '==', myID)
-        .where('senderId', '==', myID)
-        .get()
-        .then((res) => {
-            getValueHandler(res);
-            console.log(res)
-        }).catch(err => {
-            getValueHandler(null)
-            console.warn(err)
-        });
-
-}
-
-const getMyConversationsHandler = (myID, getValueHandler) => {
-    firestore()
-        .collection('openConversation')
-        // .where('receiverId', '==', myID)
-        .where('senderId', '==', myID)
-        .get()
-        .then((res) => {
-            getValueHandler(res);
-            console.log(res)
-        }).catch(err => {
-            getValueHandler(null)
-            console.warn(err)
-        });
-
-}
-
-// const getPrivateChatHandler = (conversationId, getValueHandler) => {
-//     firestore()
-//         .collection('privateChat')
-//         .where('conversationId', '==', conversationId)
-//         .get()
-//         .then((res) => {
-//             getValueHandler(res);
-//             console.log(res)
-//         }).catch(err => {
-//         getValueHandler(null)
-//         console.warn(err)
-//     });
-//
-// }
-
-
-
-const getUnReadMessages = (conversationId, getValueHandler) => {
-    firestore()
-        .collection('privateChat')
-        .where('conversationId', '==', conversationId)
-        .where('isRead', '==', false)
-        .get()
-        .then((res) => {
-            getValueHandler(res)
-        }).catch(err => {
-            getValueHandler(null)
-            console.warn(err)
-        });
-}
-
-const updateReadMessages = async (conversationId) => {
-
-    if (conversationId) {
-        let getData = await firestore().collection("privateChat")
-            .where('conversationId', '==', conversationId)
-            .where('isRead', '==', false)
-            .get();
-
-        if (getData) {
-            getData._docs.map(async (doc) => {
-                let updateData = await firestore().collection("privateChat")
-                    .doc(doc.id)
-                    .update({
-                        isRead: true
-                    });
-                if (updateData) {
-                    // console.log("Document updated!")
-                }
-            });
-
-        } else {
-            // TODO:nothing
-        }
-    }
-}
-
-
-
-
 // TODO: don't use, because these API under the development
 const deletePrivateMessages = () => {
     firestore()
@@ -331,12 +191,8 @@ const deletePrivateMessage = () => {
 
 
 export {
-    saveConversationHandler,
     sendPrivateMessage,
-    getMyConversationsHandler,
     getPrivateChatHandler,
-    getUnReadMessages,
-    updateReadMessages,
 
     manualPrivateChatHandler,
     getChatterListHandler

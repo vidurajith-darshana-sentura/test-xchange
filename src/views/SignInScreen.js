@@ -48,7 +48,7 @@ const SignInScreen = () => {
 
         if (signInSuccess) {
             const result = signInSuccess.result;
-            global.userId = result.id;
+            global.userId = Number(result.id);
             initiateLogin(JSON.stringify(result.id),result.token);
         }
         if (signInError) {
