@@ -19,7 +19,6 @@ const ChatScreen = ({navigation, route}) => {
     const subscriber = firestore()
         .collection('privateChat')
         .onSnapshot(documentSnapshot => {
-          // console.log('User data: ', );
           let data = manualPrivateChatHandler(documentSnapshot?._docs, user?.partnerId);
 
           let msg = [];

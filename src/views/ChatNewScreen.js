@@ -133,6 +133,7 @@ const ChatNewScreen = (props) => {
 
 
    let user = props?.route?.params?.details?.userDto
+    console.log(user)
     let data ={
       receiverId: user?.id,
       receiverName: user.firstName + " " + user.lastName,

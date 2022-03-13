@@ -67,8 +67,8 @@ const getPrivateChatHandler = async (partnerId) => {
     console.log("---------------------")
     let filter = get?._docs.filter(item => {
         let data = item?._data
-        if ((data.receiverId == global.userId && data.senderId ===  partnerId)
-            || (data.receiverId == partnerId && data.senderId ===  global.userId)) {
+        if ((data.receiverId === global.userId && data.senderId ===  partnerId)
+            || (data.receiverId === partnerId && data.senderId ===  global.userId)) {
             return item;
         }
     });
@@ -83,8 +83,8 @@ const getPrivateChatHandler = async (partnerId) => {
 const manualPrivateChatHandler =  (data, partnerId) => {
     let filter = data.filter(item => {
         let data = item?._data
-        if ((data.receiverId == global.userId && data.senderId ===  partnerId)
-            || (data.receiverId == partnerId && data.senderId ===  global.userId)) {
+        if ((data.receiverId === global.userId && data.senderId ===  partnerId)
+            || (data.receiverId === partnerId && data.senderId ===  global.userId)) {
             return item;
         }
     });
@@ -96,10 +96,6 @@ const manualPrivateChatHandler =  (data, partnerId) => {
     }
 
 }
-
-
-
-
 
 
 const sendPrivateMessage = ({ receiverId = 0,
@@ -147,7 +143,7 @@ const getChatterListHandler = async () => {
     filter.map(item => {
         let temp = item?._data;
         if (temp.senderId === global.userId) {
-            data.push({id: temp.receiverId, name: temp.receiverName, image: temp.receiverImage, lastMessage: '', unReadCount: 0, lastTime: '' });
+            data.push({id: temp.receiverId, name: temp.receiverName, image: temp.receiverImage});
         } else if (temp.receiverId === global.userId) {
             data.push({id: temp.senderId, name: temp.senderName, image: temp.senderImage });
         }
