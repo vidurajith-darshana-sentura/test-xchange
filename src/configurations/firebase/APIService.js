@@ -81,9 +81,6 @@ const getPrivateChatHandler = async (partnerId) => {
 }
 
 const manualPrivateChatHandler =  (data, partnerId) => {
-    console.log(data, " ------- ", partnerId)
-    console.log("---------------------")
-    console.log("---------------------")
     let filter = data.filter(item => {
         let data = item?._data
         if ((data.receiverId == global.userId && data.senderId ===  partnerId)
@@ -91,9 +88,7 @@ const manualPrivateChatHandler =  (data, partnerId) => {
             return item;
         }
     });
-    console.log("FilterDto: ", filter)
-    console.log("---------------------")
-    console.log("---------------------")
+
     if (filter.length > 0) {
         return filter;
     } else {
@@ -155,7 +150,7 @@ const getChatterListHandler = async () => {
     filter.map(item => {
         let temp = item?._data;
         if (temp.senderId === global.userId) {
-            data.push({id: temp.receiverId, name: temp.receiverName, image: temp.receiverImage });
+            data.push({id: temp.receiverId, name: temp.receiverName, image: temp.receiverImage, lastMessage: '', unReadCount: 0, lastTime: '' });
         } else if (temp.receiverId === global.userId) {
             data.push({id: temp.senderId, name: temp.senderName, image: temp.senderImage });
         }
@@ -343,5 +338,6 @@ export {
     getUnReadMessages,
     updateReadMessages,
 
-    manualPrivateChatHandler
+    manualPrivateChatHandler,
+    getChatterListHandler
 }

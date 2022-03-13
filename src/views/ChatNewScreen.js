@@ -76,9 +76,8 @@ const ChatNewScreen = (props) => {
     const subscriber = firestore()
         .collection('privateChat')
         .onSnapshot(documentSnapshot => {
-          // console.log('User data: ', );
           let data = manualPrivateChatHandler(documentSnapshot?._docs, details?.userDto?.id);
-          console.log("UserDto: " ,data)
+
 
           let msg = [];
           data.map((item, index) => {
@@ -103,7 +102,7 @@ const ChatNewScreen = (props) => {
             let temp =  {
               _id: index,
               text: item?._data?.message,
-              createdAt: item?._data?.dateTime,
+              createdAt: new Date(item?._data?.dateTime),
               user: {
                 _id: id,
                 name:name,
@@ -114,7 +113,7 @@ const ChatNewScreen = (props) => {
             msg.push(temp);
           });
 
-          setMessages(msg.sort((a, b) => b.dateTime - a.dateTime))
+          setMessages(msg.sort((a, b) => b.createdAt - a.createdAt));
 
         });
 

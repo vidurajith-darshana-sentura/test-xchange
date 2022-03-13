@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, Text, Button, StyleSheet, Image, ScrollView } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import {
@@ -13,49 +13,40 @@ import {
   MessageText,
   TextSection,
 } from '../styles/MessageStyles';
+import {getChatterListHandler} from "../configurations/firebase/APIService";
+import moment from "moment";
 
-const Messages = [
-  {
-    id: '1',
-    userName: 'Jenny Doe',
-    userImg: require('../assets/users/user-3.jpg'),
-    messageTime: '4 mins ago',
-    messageText:
-      'Hey there, this is my test for a post of my social app in React Native.',
-  },
-  {
-    id: '2',
-    userName: 'John Doe',
-    userImg: require('../assets/users/user-1.jpg'),
-    messageTime: '2 hours ago',
-    messageText:
-      'Hey there, this is my test for a post of my social app in React Native.',
-  },
-  {
-    id: '3',
-    userName: 'Ken William',
-    userImg: require('../assets/users/user-4.jpg'),
-    messageTime: '1 hours ago',
-    messageText:
-      'Hey there, this is my test for a post of my social app in React Native.',
-  },
-  {
-    id: '4',
-    userName: 'Selina Paul',
-    userImg: require('../assets/users/user-6.jpg'),
-    messageTime: '1 day ago',
-    messageText:
-      'Hey there, this is my test for a post of my social app in React Native.',
-  },
-
-
-
-
-
-
-];
 
 const MessageScreen = ({ navigation }) => {
+
+  const [partners, setPartners] = useState([]);
+
+  useEffect(() => {
+    (async function () {
+      let data = await getChatterListHandler();
+
+      let arr = [];
+      data.map((item, index) => {
+        let temp ={
+          id: index,
+          partnerId: item.id,
+          userName: item.name,
+          userImage: item.image,
+          // messageTime: moment(new Date()).fromNow(),
+          messageTime:'',
+          messageText:
+              '',
+        }
+        arr.push(temp);
+
+      })
+
+
+      setPartners(arr)
+    }) ();
+  }, []);
+
+
   return (
 
     <View style={{
@@ -99,21 +90,21 @@ const MessageScreen = ({ navigation }) => {
 
         <FlatList
           style={{ marginTop: -10 }}
-          data={Messages}
+          data={partners}
 
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
             <Card onPress={() => navigation.navigate('Chat', { userName: item.userName, user: item })}>
               <UserInfo>
                 <UserImgWrapper>
-                  <UserImg source={item.userImg} />
+                  <UserImg source={item.userImage ? {uri: item.userImage} :require('../assets/users/user-4.jpg')} />
                 </UserImgWrapper>
                 <TextSection>
                   <UserInfoText>
                     <UserName>{item.userName}</UserName>
                     <PostTime>{item.messageTime}</PostTime>
                   </UserInfoText>
-                  <MessageText>{item.messageText}</MessageText>
+                  {/*<MessageText>{item.messageText}</MessageText>*/}
                 </TextSection>
               </UserInfo>
             </Card>
