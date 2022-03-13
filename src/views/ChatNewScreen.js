@@ -10,6 +10,10 @@ import { useNavigation } from '@react-navigation/native';
 import { TouchableRipple, } from 'react-native-paper';
 import { greenColor } from '../styles/constants';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {manualPrivateChatHandler, sendPrivateMessage} from "../configurations/firebase/APIService";
+import {firestore} from "../configurations/firebase/firebaseConfig";
+
+
 const ModalPoup = ({ visible, children }) => {
   const [showModal, setShowModal] = React.useState(visible);
   const scaleValue = React.useRef(new Animated.Value(0)).current;
@@ -55,46 +59,93 @@ const ChatNewScreen = (props) => {
   const navigation = useNavigation();
 
   useEffect(() => {
+
+  },[]);
+
+
+  useEffect(() => {
     if(props && props.route.params && props.route.params.toId){
       toId = props.route.params.toId;
     }
-
     if(props && props.route.params && props.route.params.details){
-      console.log("djdnjdn: ",props.route.params.details.userDto)
       setDetails(props.route.params.details);
     }
-  },[])
-
-  useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: 'Hello developer',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-      {
-        _id: 2,
-        text: 'Hello world',
-        createdAt: new Date(),
-        user: {
-          _id: 1,
-          name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-    ]);
-  }, []);
 
 
-  const onSend = useCallback((messages = []) => {
+    // firebase
+    const subscriber = firestore()
+        .collection('privateChat')
+        .onSnapshot(documentSnapshot => {
+          // console.log('User data: ', );
+          let data = manualPrivateChatHandler(documentSnapshot?._docs, details?.userDto?.id);
+          console.log("UserDto: " ,data)
+
+          let msg = [];
+          data.map((item, index) => {
+
+
+
+            let isSender = Number(item?._data?.senderId) === Number(global.userId);
+            let id = 0;
+            let name = '';
+            let image = '';
+
+             id = Number(item?._data?.senderId);
+            if (isSender) {
+              name = item?._data?.senderName ;
+              image =  item?._data?.senderImage;
+            } else {
+              name = item?._data?.receiverName;
+              image = item?._data?.receiverImage;
+            }
+
+
+            let temp =  {
+              _id: index,
+              text: item?._data?.message,
+              createdAt: item?._data?.dateTime,
+              user: {
+                _id: id,
+                name:name,
+                avatar: image,
+              },
+            }
+
+            msg.push(temp);
+          });
+
+          setMessages(msg.sort((a, b) => b.dateTime - a.dateTime))
+
+        });
+
+    // Stop listening for updates when no longer required
+    return () => subscriber();
+  }, [details?.userDto?.id]);
+
+
+
+
+
+  const onSend = useCallback(async (messages = []) => {
+
     setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, messages),
     );
+
+
+   let user = props?.route?.params?.details?.userDto
+    let data ={
+      receiverId: user?.id,
+      receiverName: user.firstName + " " + user.lastName,
+      receiverImage: user?.profileUrl,
+      senderId: global.userId,
+      senderName: null ,
+      senderImage: null,
+      message: messages[0]?.text,
+    }
+    await sendPrivateMessage(data);
+
+
   }, []);
 
 
@@ -124,10 +175,18 @@ const ChatNewScreen = (props) => {
           right: {
             backgroundColor: '#20B2AA',
           },
+
+          left: {
+            backgroundColor: '#d4eceb',
+          },
         }}
         textStyle={{
           right: {
             color: '#fff',
+          },
+
+          left: {
+            color: '#000',
           },
         }}
       />
@@ -153,6 +212,7 @@ const ChatNewScreen = (props) => {
         </View>
         <Text style={{ fontSize: 25, marginTop: -10, right: -15 }}>
           {details && details.userDto && details.userDto.firstName ? details.userDto.firstName : ""}
+          {" "}
           {details && details.userDto && details.userDto.lastName ? details.userDto.lastName : ""}
         </Text>
 
@@ -183,7 +243,7 @@ const ChatNewScreen = (props) => {
         messages={messages}
         onSend={(messages) => onSend(messages)}
         user={{
-          _id: 1,
+          _id: global.userId,
         }}
         renderBubble={renderBubble}
         alwaysShowSend

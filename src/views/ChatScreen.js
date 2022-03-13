@@ -5,17 +5,21 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 
-const ChatScreen = () => {
+const ChatScreen = ({navigation, route}) => {
+  const {user} = route?.params;
   const [messages, setMessages] = useState([]);
 
+  console.log("------------------------")
+  console.log(user)
+  console.log("user------------------")
   useEffect(() => {
     setMessages([
       {
         _id: 1,
-        text: 'Hello developer',
+        text: 'Hello developer 2',
         createdAt: new Date(),
         user: {
-          _id: 2,
+          _id: global.userId,
           name: 'React Native',
           avatar: 'https://placeimg.com/140/140/any',
         },
@@ -25,7 +29,27 @@ const ChatScreen = () => {
         text: 'Hello world',
         createdAt: new Date(),
         user: {
-          _id: 1,
+          _id: user?.id,
+          name: 'React Native',
+          avatar: 'https://placeimg.com/140/140/any',
+        }
+      },
+      {
+        _id: 3,
+        text: 'Whats up',
+        createdAt: new Date(),
+        user: {
+          _id: global.userId,
+          name: 'React Native',
+          avatar: 'https://placeimg.com/140/140/any',
+        },
+      },
+      {
+        _id: 4,
+        text: 'Fine.',
+        createdAt: new Date(),
+        user: {
+          _id: user?.id,
           name: 'React Native',
           avatar: 'https://placeimg.com/140/140/any',
         },
@@ -40,7 +64,7 @@ const ChatScreen = () => {
     );
   }, []);
 
-  
+
 
   const renderSend = (props) => {
     return (
@@ -52,7 +76,7 @@ const ChatScreen = () => {
             size={42}
             color="#20B2AA"
           />
-       
+
         </View>
       </Send>
     );
@@ -73,14 +97,14 @@ const ChatScreen = () => {
           },
         }}
       />
-      
+
     );
   };
 
   const scrollToBottomComponent = () => {
     return(
       <FontAwesome name='angle-double-down' size={22} color='#333' />
-      
+
     );
   }
 
@@ -89,7 +113,7 @@ const ChatScreen = () => {
       messages={messages}
       onSend={(messages) => onSend(messages)}
       user={{
-        _id: 1,
+        _id: global.userId,
       }}
       renderBubble={renderBubble}
       alwaysShowSend
@@ -98,10 +122,10 @@ const ChatScreen = () => {
       scrollToBottomCompo
       nent={scrollToBottomComponent}
     />
-    
-    
+
+
   );
-  
+
 };
 
 export default ChatScreen;
