@@ -11,7 +11,7 @@ const initialState = {
     queryShipmentRequestFailed: "",
 
     travellerRequests: [],
-    
+
 }
 
 
@@ -19,24 +19,28 @@ export default (state = initialState, action) => {
     switch (action.type) {
         case createBuyerRequest.REQUEST_ACTION :
             return {
+                ...state,
                 isCreatingBuyerRequest: true,
                 createBuyerRequestSuccess: null,
                 createBuyerRequestFailure: ""
             }
         case createBuyerRequest.SUCCESS_ACTION :
             return {
+                ...state,
                 isCreatingBuyerRequest: false,
                 createBuyerRequestSuccess: action.value,
                 createBuyerRequestFailure: ""
             }
         case createBuyerRequest.FAILED_ACTION :
             return {
+                ...state,
                 isCreatingBuyerRequest: false,
                 createBuyerRequestSuccess: null,
                 createBuyerRequestFailure: action.value
             }
         case resetActionTypes.RESET_CREATE_BUYER_REQUEST :
             return {
+                ...state,
                 isCreatingBuyerRequest: false,
                 createBuyerRequestSuccess: null,
                 createBuyerRequestFailure: ""
@@ -47,6 +51,7 @@ export default (state = initialState, action) => {
         case getShipmentsRequest.REQUEST_ACTION :
             console.log("SCKNJV: rwdhbf ")
             return {
+                ...state,
                 isQueryingOpenSellerRequests: true,
                 shipmentRequests: [],
                 queryShipmentRequestFailed: ""
@@ -59,18 +64,21 @@ export default (state = initialState, action) => {
             }
 
             return {
+                ...state,
                 isQueryingOpenSellerRequests: false,
                 shipmentRequests: temp,
                 queryShipmentRequestFailed: ""
             }
         case getShipmentsRequest.FAILED_ACTION :
             return {
+                ...state,
                 isQueryingOpenSellerRequests: false,
                 shipmentRequests: [],
                 queryShipmentRequestFailed: action.value
             }
         case resetActionTypes.RESET_QUERY_SHIPMENT_REQUEST :
             return {
+                ...state,
                 isQueryingOpenSellerRequests: false,
                 shipmentRequests: [],
                 queryShipmentRequestFailed: ""
@@ -79,6 +87,7 @@ export default (state = initialState, action) => {
 
         case getTravellerRequest.REQUEST_ACTION :
             return {
+                ...state,
                 isQueryingOpenSellerRequests: true,
                 travellerRequests: [],
                 queryShipmentRequestFailed: ""
@@ -90,23 +99,26 @@ export default (state = initialState, action) => {
             }
 
             return {
+                ...state,
                 isQueryingOpenSellerRequests: false,
                 travellerRequests: prevTravellerRequests,
                 queryShipmentRequestFailed: ""
             }
         case getTravellerRequest.FAILED_ACTION :
             return {
+                ...state,
                 isQueryingOpenSellerRequests: false,
                 travellerRequests: [],
                 queryShipmentRequestFailed: action.value
             }
         case resetActionTypes.RESET_QUERY_TRAVELLER_REQUESTS :
             return {
+                ...state,
                 isQueryingOpenSellerRequests: false,
                 travellerRequests: [],
                 queryShipmentRequestFailed: ""
             }
-        default: 
+        default:
             return state
     }
 }

@@ -17,23 +17,27 @@ export default (state = initialState, action) => {
     switch (action.type) {
         case createSellerRequest.REQUEST_ACTION:
             return {
+                ...state,
                 isCreatingSellerRequest: true,
                 createSellerRequestSuccess: null,
                 createSellerRequestFailure: ""
             }
         case createSellerRequest.SUCCESS_ACTION:
             return {
+                ...state,
                 isCreatingSellerRequest: false,
                 createSellerRequestSuccess: action.value,
                 createSellerRequestFailure: ""
             }
         case createSellerRequest.FAILED_ACTION:
             return {
+                ...state,
                 isCreatingSellerRequest: false,
                 createSellerRequestFailure: action.value
             }
         case resetActionTypes.RESET_CREATE_SELLER_REQUEST:
             return {
+                ...state,
                 isCreatingSellerRequest: false,
                 createSellerRequestSuccess: null,
                 createSellerRequestFailure: ""
@@ -42,6 +46,7 @@ export default (state = initialState, action) => {
 
         case queryOpenBuyerRequest.REQUEST_ACTION:
             return {
+                ...state,
                 isQueryingOpenBuyerRequests: true,
                 buyerRequests: [],
                 queryBuyerRequestFailed: ""
@@ -55,18 +60,21 @@ export default (state = initialState, action) => {
             }
 
             return {
+                ...state,
                 isQueryingOpenBuyerRequests: false,
                 buyerRequests: temp,
                 queryBuyerRequestFailed: ""
             }
         case queryOpenBuyerRequest.FAILED_ACTION:
             return {
+                ...state,
                 isQueryingOpenBuyerRequests: false,
                 buyerRequests: [],
                 queryBuyerRequestFailed: action.value
             }
         case resetActionTypes.RESET_QUERY_BUYER_REQUESTS:
             return {
+                ...state,
                 isQueryingOpenBuyerRequests: false,
                 buyerRequests: [],
                 queryBuyerRequestFailed: ""

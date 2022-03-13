@@ -6,15 +6,16 @@ const initialState = {
    createOfferSuccess: null,
    createOfferFailed: "",
 
-   isFetchingOffers: false,
-   offerList: [],
-   getOffersFailed: ""
+    getOffersByUserSuccess: null,
+    getOffersByUserFailed: null,
+    getOffersByUserLoading: false,
+
 }
 
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case createOfferRequestActionType.REQUEST_ACTION: 
+        case createOfferRequestActionType.REQUEST_ACTION:
             return {
                 ...state,
                 isCreatingOffer: false,
@@ -28,7 +29,7 @@ export default (state = initialState, action) => {
                 createOfferSuccess: action.value,
                 createOfferFailed: ""
             }
-        case createOfferRequestActionType.FAILED_ACTION: 
+        case createOfferRequestActionType.FAILED_ACTION:
             return {
                 ...state,
                 isCreatingOffer: false,
@@ -44,45 +45,46 @@ export default (state = initialState, action) => {
         }
 
 
-        
-        case getOffersActionType.REQUEST_ACTION: 
+        case getOffersActionType.REQUEST_ACTION:
             return {
                 ...state,
-                isFetchingOffers: true,
-                offerList: [],
-                getOffersFailed: ""
-            }
-        case getOffersActionType.SUCCESS_ACTION: 
-            let temp = state.offerList ? [...state.offerList] : [];
-            console.log("DATA: insingjbg")
-            if (action.value && action.value.result && action.value.result) {
-                temp = temp.concat(action.value.result);
-            }
+                getOffersByUserSuccess: null,
+                getOffersByUserFailed: null,
+                getOffersByUserLoading: true,
 
-            console.log("DATA: insingjbg", temp)
-            return {
-                ...state,
-                isFetchingOffers: false,
-                offerList: temp,
-                getOffersFailed: ""
             }
-        case getOffersActionType.FAILED_ACTION: 
+        case getOffersActionType.SUCCESS_ACTION:
+
             return {
                 ...state,
-                isFetchingOffers: false,
-                getOffersFailed: action.value
+                getOffersByUserSuccess: action.value,
+                getOffersByUserFailed: null,
+                getOffersByUserLoading: false,
+
+            }
+        case getOffersActionType.FAILED_ACTION:
+            return {
+                ...state,
+                getOffersByUserSuccess: null,
+                getOffersByUserFailed: action.value,
+                getOffersByUserLoading: false,
+
             }
 
         case resetActionTypes.RESET_GET_OFFER_LIST_REQUEST: {
             return {
                 ...state,
-                isFetchingOffers: false,
-                offerList: [],
-                getOffersFailed: ""
+                getOffersByUserSuccess: null,
+                getOffersByUserFailed: null,
+                getOffersByUserLoading: false,
+
+                isCreatingOffer: false,
+                createOfferSuccess: null,
+                createOfferFailed: "",
             }
         }
 
-        default: 
+        default:
             return state;
     }
 }

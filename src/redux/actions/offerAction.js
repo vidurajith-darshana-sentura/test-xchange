@@ -12,11 +12,10 @@ export const createOfferRequest = (data) => {
     })
 }
 
-export const getOffersListRequest = (pageNumber, rows) => {
-    console.log("jnjrnjrjnrnjr: ", `${getOfferListUrl}${global.userId}/${pageNumber}/${rows}`)
+export const getOffersListRequest = ({pageNumber, pageSize}) => {
     return httpGet({
         isAuth: true,
-        url: `${getOfferListUrl}${global.userId}/${pageNumber}/${rows}`,
+        url: `${getOfferListUrl}${global.userId}/${pageNumber}/${pageSize}`,
         actionTypes: getOffersActionType,
     })
 }

@@ -54,7 +54,6 @@ const PastOrderScreen = ({route}) => {
             }
 
             setPastOrder(data.sort((a, b) => b.id - a.id));
-            setPastOrder(data);
             setTotalPages(totalPages);
 
         } else if (getOrdersByUserFailed) {
@@ -113,12 +112,12 @@ const PastOrderScreen = ({route}) => {
                 }
             />
 
-            {/*{*/}
-            {/*    (!offerList || offerList.length === 0 && !isFetchingOffers) &&*/}
-            {/*        <View style={{ height: "75%", justifyContent: "center", alignItems: "center" }}>*/}
-            {/*            <Text>No offers available at the moment</Text>*/}
-            {/*        </View>*/}
-            {/*}*/}
+            {
+                (!pastOrder || pastOrder.length === 0 && !getOrdersByUserLoading) &&
+                    <View style={{ height: "75%", justifyContent: "center", alignItems: "center" }}>
+                        <Text>No past orders available at the moment</Text>
+                    </View>
+            }
 
         </View>
 
