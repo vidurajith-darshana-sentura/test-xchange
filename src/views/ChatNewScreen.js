@@ -253,10 +253,10 @@ const ChatNewScreen = ({navigation, route}) => {
 
           </View>
         </View>
-        <View style={{ alignItems: 'center' }}>
-          <Ionicons name="close" size={25} color="black" onPress={() => setVisible(false)} style={{ marginTop: -10, left: 110, paddingBottom: 10 }} />
+        <View style={{ alignItems: 'center',flexDirection: 'row',justifyContent:'center' }}>
+          <Ionicons name="close" size={25} color="black" onPress={() => setVisible(false)} style={{ left: 180}} />
 
-          <Text style={{ fontSize: 22, marginTop: -40 }}>Create Offer</Text>
+          <Text style={{ fontSize: 22 }}>Create Offer</Text>
         </View>
         <Text style={{ color: '#a9a9a9' }}>_________________________________________</Text>
 

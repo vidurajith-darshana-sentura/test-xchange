@@ -71,7 +71,7 @@ const Profile = (props) => {
 
                         </Title>
 
-                    <Caption style={styles.caption}>{details && details.createDateTime ? formatDate(details.createDateTime) : ""}</Caption>
+                    <Caption style={styles.caption}>{details && details.createDateTime}</Caption>
                         <View style={{marginTop: -40, marginLeft: '80%'}}>
                             <Ionicons name="chevron-down" size={27} color="#808080"/>
                         </View>
@@ -147,7 +147,7 @@ const Profile = (props) => {
 
                             details.requestItems.map((item, index) =>
 
-                                <View style = {{width: "100%", borderTopColor:"grey", borderTopWidth: 1, paddingTop: 10}}>
+                                <View key={index} style = {{width: "100%", borderTopColor:"grey", borderTopWidth: 1, paddingTop: 10}}>
                                     <Text>* {item.itemName ? item.itemName : ""}</Text>
                                     {
                                         item.imageUrl ?

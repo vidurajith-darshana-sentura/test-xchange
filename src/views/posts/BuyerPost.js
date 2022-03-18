@@ -144,7 +144,7 @@ const BuyerPost = () => {
 
     pageNumber = 0;
 
-    getSellerPosts(0, true)
+    getBuyerPosts(0, true)
     pageNumber++;
 
     return (() => {
@@ -156,12 +156,13 @@ const BuyerPost = () => {
 
 
   const onSelectCountry = (result) => {
+    pageNumber = 0;
     setSelectedCountry(result.name);
     dispatch(getOpenBuyerRequest(0, ROWS_PER_PAGE, startDate, endDate, result.name));
   }
 
 
-  const getSellerPosts = (pageNumber, isInitial = false) => {
+  const getBuyerPosts = (pageNumber, isInitial = false) => {
     if (!momentumScrollBegin || isInitial)
       dispatch(getOpenBuyerRequest(pageNumber, ROWS_PER_PAGE, startDate, endDate, selectedCountry));
   }
@@ -191,7 +192,7 @@ const BuyerPost = () => {
         </View>
         <View style={{ justifyContent: "space-evenly", flexDirection: "row", paddingTop: 0, marginBottom: 10 }}>
 
-          <TouchableOpacity 
+          <TouchableOpacity
             onPress={() => setIsCalendarVisible(!isCalendarVisible)}>
             <TextInput
               placeholder={'YYYY-MM-DD -- YYYY-MM-DD'}
@@ -243,6 +244,7 @@ const BuyerPost = () => {
                   setMarkedDates(copy);
 
                   if (startDate && endDate) {
+                    pageNumber = 0;
                     setIsCalendarVisible(false);
                     dispatch(getOpenBuyerRequest(pageNumber, ROWS_PER_PAGE, startDate, endDate, selectedCountry));
                   }
@@ -271,7 +273,7 @@ const BuyerPost = () => {
               style={{ marginTop: -10, height: '70%' }}
               data={buyerRequests}
               onEndReachedThreshold={0}
-              onEndReached={() => getSellerPosts()}
+              onEndReached={() => getBuyerPosts()}
               onMomentumScrollBegin={() => momentumScrollBegin = false}
               keyExtractor={item => item.id}
               renderItem={({ item }) => (

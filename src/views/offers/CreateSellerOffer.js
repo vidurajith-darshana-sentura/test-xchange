@@ -27,7 +27,6 @@ const itemProperty = {
 }
 
 let doSetDeliveryCountry = false;
-let isSeller = false;
 let toId = null;
 
 const CreateSellerOffer = (props) => {
@@ -39,6 +38,7 @@ const CreateSellerOffer = (props) => {
     const [deliveryCountry, setDeliveryCountry] = useState(null);// delivery country
     const [fromCountry, setFromCountry] = useState(null);// from country
     const [isCountryPickerVisible, setCountryPickerVisible] = useState(false);
+    const [isSeller, setIsSeller] = useState(false);
 
     const navigation = useNavigation();
     const dispatch = useDispatch();
@@ -54,7 +54,7 @@ const CreateSellerOffer = (props) => {
         }
 
         if(props && props.route.params && Object.keys(props.route.params).includes("isSeller")){
-            isSeller = props.route.params.isSeller
+            setIsSeller(props.route.params.isSeller);
         }
 
         if(props && props.route.params && Object.keys(props.route.params).includes("toId")){
@@ -101,7 +101,7 @@ const CreateSellerOffer = (props) => {
             console.log("BODY: ", body);
             dispatch(createOfferRequest(body))
         }
-        
+
     }
 
     return (
@@ -134,7 +134,7 @@ const CreateSellerOffer = (props) => {
                         onPress={() => navigation.goBack()}
                         paddingHorizontal={-30}
                     />
-                    <Text style={{ fontSize: 25, paddingHorizontal: 20, }}>Create Seller Offer</Text>
+                    <Text style={{ fontSize: 25, paddingHorizontal: 20, }}>Create {isSeller ? 'Seller' : 'Buyer'} Offer</Text>
                 </View>
                 <View style={styles.menuWrapper}>
                     <Text style={styles.subheader}>Offer Description</Text>
@@ -208,7 +208,7 @@ const CreateSellerOffer = (props) => {
                                     placeholder={'Quantity'} />
 
                                     <Text style = {{textAlign:"right", marginTop: 10}}>
-                                        Sub Total : {item.qty && item.price ? parseInt(item.qty) * parseInt(item.price) : 0}
+                                        Sub Total : ${item.qty && item.price ? parseInt(item.qty) * parseInt(item.price) : 0}
                                     </Text>
                             </View>
                         )
@@ -228,14 +228,15 @@ const CreateSellerOffer = (props) => {
 
 
                     <Text style = {{marginTop: 20}}>
-                        User Price
+                        User Charge (USD)
                     </Text>
                     <TextInput
                         style={{
                             borderColor: '#d3d3d3', borderBottomWidth: 1,
                             padding: 5,  fontSize: 15
                         }}
-                        placeholder = {"User price"}
+                        keyboardType={'numeric'}
+                        placeholder = {"User Charge"}
                         value = {userPrice}
                         onChangeText = {(val) => setUserPrice(val)}
                     />
@@ -258,11 +259,11 @@ const CreateSellerOffer = (props) => {
                         />
                     </TouchableOpacity>
 
-                
+
                     <Text style = {{marginTop: 20}}>
                         Delivery Country
                     </Text>
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         style = {{paddingVertical: 10}}
                         onPress = {() =>{doSetDeliveryCountry = true;setCountryPickerVisible(true)}}>
                         <TextInput

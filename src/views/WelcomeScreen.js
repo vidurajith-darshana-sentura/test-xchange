@@ -28,6 +28,7 @@ const WelcomeScreen = () =>{
 
       const fcm = await AsyncStorage.getItem('fcm');
       const deviceRegisteredFcm = await getDeviceFcmToken();
+      console.log(deviceRegisteredFcm)
 
       if (id && email && token) {
         global.userId = id;

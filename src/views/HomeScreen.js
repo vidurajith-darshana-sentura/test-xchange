@@ -46,9 +46,7 @@ class HomeScreen extends Component {
                     />
 
                   <View>
-                      {
-                          this.state?.isBuyer ? <BuyerMode /> : <SellerMode />
-                      }
+                      { this.state?.isBuyer ? <BuyerMode /> : <SellerMode /> }
                   </View>
 
 

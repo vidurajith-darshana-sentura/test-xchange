@@ -7,7 +7,7 @@ import Geolocation from 'react-native-geolocation-service';
 import { showToast } from '../../configurations/toastConfigurations';
 import {dimensions, greenColor} from '../../styles/constants';
 import MapView , {Marker} from 'react-native-maps';
-import {validateEmailAddress} from "../../util/validator";
+import {validateMobileNumber,validateEmailAddress} from "../../util/validator";
 import {useDispatch, useSelector} from "react-redux";
 import {getTrackingMethodsAction} from "../../redux/actions/orderActions";
 import Loader from "../../components/Loader";
@@ -182,10 +182,11 @@ const OrdersScreen = ({navigation}) => {
                 }}
                 value={mobileNumber}
                 style={{
-                    borderColor: '#d3d3d3', borderBottomWidth: 1,
+                    borderColor: mobileNumber && validateMobileNumber(mobileNumber) ? '#d3d3d3' : 'red', borderBottomWidth: 1,
                     padding: 5, paddingTop: 20, fontSize: 15, width: "100%"
                 }}
                 placeholder={'Mobile Number'} />
+                <Text style={{fontSize: 10,color: 'red'}}>Mobile number should have 10 digits</Text>
 
             <TouchableOpacity
                 onPress = {getLocation}
@@ -256,6 +257,7 @@ const OrdersScreen = ({navigation}) => {
                             title = "DONE"
                         />
                     </View>
+
 
                 </View>
 
