@@ -27,17 +27,18 @@ const MessageScreen = ({ navigation }) => {
 
       let arr = [];
       data.map((item, index) => {
+        console.log("=============")
+        console.log(item)
         let temp ={
           id: index,
           partnerId: item.id,
           userName: item.name,
           userImage: item.image,
-          // messageTime: moment(new Date()).fromNow(),
           messageTime:'',
-          messageText:
-              '',
+          messageText:'',
         }
         arr.push(temp);
+        console.log("data:  ", data)
 
       })
 
@@ -98,14 +99,15 @@ const MessageScreen = ({ navigation }) => {
 
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
-            <Card onPress={() => navigation.navigate('Chat', { userName: item.userName, user: item })}>
+            <Card onPress={() => navigation.navigate('ChatNewScreen', { userName: item.userName, user: item })}>
               <UserInfo>
                 <UserImgWrapper>
-                  <UserImg source={item.userImage ? {uri: item.userImage} :require('../assets/users/user-4.jpg')} />
+                  <UserImg source={item?.userImage ? {uri: item.userImage} :require('../assets/users/user-4.jpg')} />
                 </UserImgWrapper>
                 <TextSection>
                   <UserInfoText>
                     <UserName>{item.userName}</UserName>
+                    {/*{alert(item.userName)}*/}
                     <PostTime>{item.messageTime}</PostTime>
                   </UserInfoText>
                   {/*<MessageText>{item.messageText}</MessageText>*/}

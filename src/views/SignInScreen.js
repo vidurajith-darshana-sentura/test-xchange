@@ -33,12 +33,12 @@ const SignInScreen = () => {
     // handle the sign in part
     useEffect(()=>{
 
-        async function initiateLogin(id,token) {
+        async function initiateLogin(id,token, email) {
 
             const fcm = await getDeviceFcmToken();
 
             await AsyncStorage.setItem("id",id);
-            await AsyncStorage.setItem("email",email);
+
             await AsyncStorage.setItem("token",token);
             await AsyncStorage.setItem("fcm",fcm);
 
@@ -49,7 +49,7 @@ const SignInScreen = () => {
         if (signInSuccess) {
             const result = signInSuccess.result;
             global.userId = Number(result.id);
-            initiateLogin(JSON.stringify(result.id),result.token);
+            initiateLogin(JSON.stringify(result.id),result.token, email);
         }
         if (signInError) {
             showToast(signInError);
@@ -60,16 +60,26 @@ const SignInScreen = () => {
     //get profile details
     useEffect(()=>{
         if (profileDetailsSuccess) {
-            console.log("DETAILS: ",profileDetailsSuccess)
-            const result = profileDetailsSuccess.result;
+            console.log("DETAILS: ",profileDetailsSuccess.result)
+            const result = profileDetailsSuccess?.result;
 
-            if (!result.verified) {
+            if (result?.verified && result?.completed) {
+                global.userFirstName = result?.firstName;
+                global.userLastName = result?.lastName;
+                global.userEmail = result?.email;
+                global.userImage = result?.profileUrl;
+            }
+
+
+
+
+            if (!result?.verified) {
                 showToast({code: 200, result: 'Please check your inbox for verification code!'});
                 NavActions.navigate('VerifyEmail');
-            } else if (!result.completed ) {
+            } else if (!result?.completed ) {
                 showToast({code: 200, result: 'Please complete your profile to continue!'});
                 NavActions.navigate('UserDetails');
-            } else {
+            }else {
                 NavActions.navigate('MainTabScreen');
             }
         }

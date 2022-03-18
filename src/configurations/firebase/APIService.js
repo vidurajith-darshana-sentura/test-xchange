@@ -81,11 +81,17 @@ const getPrivateChatHandler = async (partnerId) => {
 }
 
 const manualPrivateChatHandler =  (data, partnerId) => {
-    let filter = data.filter(item => {
+
+    let filter = data?.filter(item => {
         let data = item?._data
-        if ((data.receiverId === global.userId && data.senderId ===  partnerId)
-            || (data.receiverId === partnerId && data.senderId ===  global.userId)) {
-            return item;
+        let userId= Number(global.userId);
+        let receiverId = Number(data.receiverId)
+        let senderId = Number(data.senderId)
+
+        if ((receiverId === userId && senderId ===  partnerId)
+            || (receiverId === partnerId && senderId === userId)) {
+            console.log("++item++: ", data)
+            return data;
         }
     });
 
@@ -129,11 +135,13 @@ const sendPrivateMessage = ({ receiverId = 0,
 
 const getChatterListHandler = async () => {
     let get = await firestore().collection('privateChat').get();
+    let userId= Number(global.userId)
 
     let filter = get?._docs?.filter(item => {
         let data = item?._data
-        if ((data.senderId === global.userId || data.receiverId === global.userId)) {
-            return item;
+        if ((data.senderId === userId || data.receiverId === userId)) {
+            console.log("CHAT :", data)
+            return data;
         }
     });
 
@@ -142,10 +150,13 @@ const getChatterListHandler = async () => {
 
     filter.map(item => {
         let temp = item?._data;
-        if (temp.senderId === global.userId) {
-            data.push({id: temp.receiverId, name: temp.receiverName, image: temp.receiverImage});
-        } else if (temp.receiverId === global.userId) {
-            data.push({id: temp.senderId, name: temp.senderName, image: temp.senderImage });
+        let senderId =Number( temp.senderId);
+        let receiverId =Number( temp.receiverId);
+
+        if ( senderId === userId) {
+            data.push({id: receiverId, name: temp.receiverName, image: temp.receiverImage});
+        } else if (receiverId === userId) {
+            data.push({id: senderId , name: temp.senderName, image: temp.senderImage });
         }
     });
 

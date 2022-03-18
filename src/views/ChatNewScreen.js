@@ -51,75 +51,59 @@ const ModalPoup = ({ visible, children }) => {
 
 let toId = "";
 
-const ChatNewScreen = (props) => {
+const ChatNewScreen = ({navigation, route}) => {
+  const {user} = route?.params;
   const [visible, setVisible] = React.useState(false);
   const [messages, setMessages] = useState([]);
   const [details, setDetails] = useState(null);
 
-  const navigation = useNavigation();
-
+  console.log("USER XXX: ", user)
   useEffect(() => {
-
-  },[]);
-
-
-  useEffect(() => {
-    if(props && props.route.params && props.route.params.toId){
-      toId = props.route.params.toId;
-    }
-    if(props && props.route.params && props.route.params.details){
-      setDetails(props.route.params.details);
-    }
-
 
     // firebase
     const subscriber = firestore()
         .collection('privateChat')
         .onSnapshot(documentSnapshot => {
-          let data = manualPrivateChatHandler(documentSnapshot?._docs, details?.userDto?.id);
-
-
+          let data = manualPrivateChatHandler(documentSnapshot?._docs, user?.partnerId);
           let msg = [];
           data.map((item, index) => {
+              let isSender = Number(item?._data?.senderId) === Number(global.userId);
+              let id = 0;
+              let name = '';
+              let image = '';
+
+              id = Number(item?._data?.senderId);
+              if (isSender) {
+                name = item?._data?.senderName ;
+                image =  item?._data?.senderImage;
+              } else {
+                name = item?._data?.receiverName;
+                image = item?._data?.receiverImage;
+              }
 
 
+              let temp =  {
+                _id: index,
+                text: item?._data?.message,
+                createdAt: new Date(item?._data?.dateTime),
+                user: {
+                  _id: id,
+                  name:name,
+                  avatar: image,
+                },
+              }
 
-            let isSender = Number(item?._data?.senderId) === Number(global.userId);
-            let id = 0;
-            let name = '';
-            let image = '';
+              msg.push(temp);
+            });
 
-             id = Number(item?._data?.senderId);
-            if (isSender) {
-              name = item?._data?.senderName ;
-              image =  item?._data?.senderImage;
-            } else {
-              name = item?._data?.receiverName;
-              image = item?._data?.receiverImage;
-            }
-
-
-            let temp =  {
-              _id: index,
-              text: item?._data?.message,
-              createdAt: new Date(item?._data?.dateTime),
-              user: {
-                _id: id,
-                name:name,
-                avatar: image,
-              },
-            }
-
-            msg.push(temp);
-          });
-
+          console.log("messages: ", data)
           setMessages(msg.sort((a, b) => b.createdAt - a.createdAt));
 
         });
 
     // Stop listening for updates when no longer required
     return () => subscriber();
-  }, [details?.userDto?.id]);
+  }, [user?.id]);
 
 
 
@@ -132,17 +116,17 @@ const ChatNewScreen = (props) => {
     );
 
 
-   let user = props?.route?.params?.details?.userDto
     console.log(user)
     let data ={
-      receiverId: user?.id,
-      receiverName: user.firstName + " " + user.lastName,
-      receiverImage: user?.profileUrl,
+      receiverId: user?.partnerId,
+      receiverName: user?.userName,
+      receiverImage: user?.userImage,
       senderId: global.userId,
-      senderName: null ,
-      senderImage: null,
+      senderName: global.userFirstName + " " + global.userLastName ,
+      senderImage: global.userImage,
       message: messages[0]?.text,
     }
+    console.log("sendMessage: ", data)
     await sendPrivateMessage(data);
 
 
@@ -211,9 +195,7 @@ const ChatNewScreen = (props) => {
           <Ionicons name="chevron-back" size={27} color="black" onPress={() => navigation.goBack()} />
         </View>
         <Text style={{ fontSize: 25, marginTop: -10, right: -15 }}>
-          {details && details.userDto && details.userDto.firstName ? details.userDto.firstName : ""}
-          {" "}
-          {details && details.userDto && details.userDto.lastName ? details.userDto.lastName : ""}
+          {user?.userName}
         </Text>
 
 

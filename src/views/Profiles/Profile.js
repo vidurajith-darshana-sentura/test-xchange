@@ -43,17 +43,19 @@ const Profile = (props) => {
         }
 
         return () => {
-         
+
         }
     }, [])
 
+
+    console.log("details?.userDto: XXXX  ", details?.userDto)
     return (
         <ScrollView style={styles.container}>
             <View style={styles.userInfoSection}>
                 <View style={{flexDirection: 'row', marginTop: 10,}}>
                     <Avatar.Image
                         source={
-                            details && details.userDto && details.userDto.profileUrl ? 
+                            details && details.userDto && details.userDto.profileUrl ?
                             { uri:  details.userDto.profileUrl } :
                             {uri: 'http://www.mountainheavensella.com/wp-content/uploads/2018/12/default-user.png'}
                         }
@@ -119,10 +121,10 @@ const Profile = (props) => {
                                     {details && details.qtyStr ? details.qtyStr : ""}
                                 </Text>
 
-                            </View> 
-                            
-                            : 
-                            
+                            </View>
+
+                            :
+
                             <View style={styles.menuItem}>
                                 <Text style={styles.menuItemText}>Price</Text>
                                 <Text style={{position: 'absolute', right: 15, top: 15, fontSize: 15}}>
@@ -131,7 +133,7 @@ const Profile = (props) => {
 
                             </View>
                         }
-                       
+
                         {/* <View style={styles.menuItem}>
                             <Text style={styles.menuItemText}>Lorem</Text>
                             <Text style={{position: 'absolute', right: 15, top: 15, fontSize: 15}}>Ipsum</Text>
@@ -143,18 +145,18 @@ const Profile = (props) => {
                         {
                             details && details.requestItems && details.requestItems.length > 0 ?
 
-                            details.requestItems.map((item, index) => 
-                            
+                            details.requestItems.map((item, index) =>
+
                                 <View style = {{width: "100%", borderTopColor:"grey", borderTopWidth: 1, paddingTop: 10}}>
                                     <Text>* {item.itemName ? item.itemName : ""}</Text>
                                     {
-                                        item.imageUrl ? 
-                                        <Image 
+                                        item.imageUrl ?
+                                        <Image
                                             style = {{ width: 100, height: 100, resizeMode:"contain", borderRadius: 10}}
                                             source = {{uri: item.imageUrl}}
                                         /> : null
                                     }
-                                    
+
                                 </View>
 
                             )
@@ -163,10 +165,18 @@ const Profile = (props) => {
 
                             null
                         }
-                        
+
 
                         <TouchableOpacity onPress={() => {
-                            navigation.navigate('ChatNewScreen',{toId: details && details.userDto ? details.userDto.id : "", details: details})
+                            // navigation.navigate('ChatNewScreen',{toId: details && details.userDto ? details.userDto.id : "", details: details})
+                            navigation.navigate('ChatNewScreen', {
+                                user: {
+                                    id:details?.userDto?.id,
+                                    partnerId:details?.userDto?.id,
+                                    userName:  details?.userDto?.firstName + " " + details?.userDto?.lastName ,
+                                    userImage: details?.userDto?.profileUrl,
+                                },
+                            })
                         }}>
 
                             <View style={styles.buttonRegist}>
