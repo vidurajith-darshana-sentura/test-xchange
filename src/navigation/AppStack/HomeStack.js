@@ -8,7 +8,7 @@ import BuyerPost from "../../views/posts/BuyerPost";
 import ShipmentPost from '../../views/posts/ShipmentPost.js'
 import TravelPost from '../../views/posts/TravelPost'
 import Profile from '../../views/Profiles/Profile';
-import ChatNewScreen from '../../views/ChatNewScreen';
+import ChatScreen from '../../views/ChatScreen';
 
 const Stack = createStackNavigator();
 const HomeStack = ({navigation}) => (
@@ -93,7 +93,7 @@ const HomeStack = ({navigation}) => (
             )
         }}/>
 
-        <Stack.Screen name="ChatNew" component={ChatNewScreen} options={{
+        <Stack.Screen name="ChatNew" component={ChatScreen} options={{
             name: 'Profile ',
             headerTitle: 'Buyer  Requests',
             headerTitleStyle: styles.headerStyle,

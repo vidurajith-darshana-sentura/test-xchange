@@ -218,7 +218,7 @@ const CreateBuyerRequest = ({ navigation }) => {
 
                         <InputForm
                             value = {description}
-                            placeholder={'Discription'}
+                            placeholder={'Description'}
                             onChangeText = {(des) => setDescription(des)}
                         />
 

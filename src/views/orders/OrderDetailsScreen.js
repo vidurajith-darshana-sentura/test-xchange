@@ -12,7 +12,7 @@ const OrderDetailsScreen = (props) => {
 
 
     useEffect(() => {
-        console.log("knjfn: ", props.route.params)
+
         if (props && props.route.params && props.route.params.offer) {
             setOfferDetail(props.route.params.offer);
         }

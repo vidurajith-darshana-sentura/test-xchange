@@ -10,130 +10,129 @@ import {
     TouchableRipple,
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { userLogout } from '../services/httpConfig';
 import {greenColor} from '../styles/constants';
-import {resetAuthState} from '../redux/actions/authActions'
 import {resetProfileState} from "../redux/actions/profileActions";
 
 const ProfileScreen = () => {
     const dispatch = useDispatch();
     const navigation = useNavigation();
 
+    const profileDetailsSuccess = useSelector(state => state.profileState.profileDetailsSuccess);
+
     return (
-        <SafeAreaView style={styles.container}>
-
-            <View style={styles.userInfoSection}>
-
-                <View style={{flexDirection: 'row', marginTop: 55}}>
-                    <Avatar.Image
-                        source={{
-                            uri: 'http://www.mountainheavensella.com/wp-content/uploads/2018/12/default-user.png',
-                        }}
-                        size={80}
-                    />
-                    <View style={{marginLeft: 20}}>
-                        <Title style={[styles.title, {
-                            marginTop: 15,
-                            marginBottom: 5,
-                            color: 'white'
-                        }]}>Alexis Norris</Title>
-                        <Caption style={styles.caption}>@alex_noe</Caption>
-
-                    </View>
-
-                </View>
+        profileDetailsSuccess && profileDetailsSuccess.result ?
+            <View style={styles.container}>
                 <View style={styles.userInfoSection}>
-                    <View style={styles.row}>
-                        <Icon name="map-marker-radius" color="white" size={20}/>
-                        <Text style={{color: "white", marginLeft: 20}}>Ontario, Canada</Text>
-                    </View>
 
-                    <View style={styles.row}>
-                        <Icon name="email" color="white" size={20}/>
-                        <Text style={{color: "white", marginLeft: 20}}>alex.norris@yahoo.com</Text>
+                    <View style={{flexDirection: 'row', marginTop: 55}}>
+                        <Avatar.Image
+                            source={{ uri: profileDetailsSuccess.result.profileUrl }}
+                            size={80}
+                        />
+                        <View style={{marginLeft: 20}}>
+                            <Title style={[styles.title, {
+                                marginTop: 15,
+                                marginBottom: 5,
+                                color: 'white'
+                            }]}>{profileDetailsSuccess.result.firstName + ' ' + profileDetailsSuccess.result.lastName}</Title>
+                            <Caption style={styles.caption}>{profileDetailsSuccess.result.country}</Caption>
+
+                        </View>
+
+                    </View>
+                    <View style={styles.userInfoSection}>
+                        <View style={styles.row}>
+                            <Icon name="map-marker-radius" color="white" size={20}/>
+                            <Text style={{color: "white", marginLeft: 20}}>{profileDetailsSuccess.result.address}</Text>
+                        </View>
+
+                        <View style={styles.row}>
+                            <Icon name="email" color="white" size={20}/>
+                            <Text style={{color: "white", marginLeft: 20}}>{profileDetailsSuccess.result.email}</Text>
+                        </View>
                     </View>
                 </View>
-            </View>
 
 
-            <View style={{
-                backgroundColor: "#FFF",
-                flex: 1
-            }}>
                 <View style={{
-                    backgroundColor: "white",
-                    paddingHorizontal: 20,
-                    marginTop: -25
+                    backgroundColor: "#FFF",
+                    flex: 1
                 }}>
+                    <View style={{
+                        backgroundColor: "white",
+                        paddingHorizontal: 20,
+                        marginTop: -25
+                    }}>
 
 
-                    {/* Profile section */}
+                        {/* Profile section */}
 
-                    <View style={styles.menuWrapper}>
-                        <Text style={styles.header}>My Xchange</Text>
+                        <View style={styles.menuWrapper}>
+                            <Text style={styles.header}>My Xchange</Text>
 
-                        <TouchableRipple onPress={() => {
-                        }} style={styles.ripple}>
-                            <View style={styles.menuItem}>
-                                <Icon name="diamond-stone" color={greenColor} size={25}/>
-                                <Text style={styles.menuItemText}>Get inspired</Text>
-                                <Icon name="chevron-right" color={greenColor} size={25}
-                                      style={{position: 'absolute', right: 15, top: 15}}/>
-
-
-                            </View>
-                        </TouchableRipple>
-                        <TouchableRipple onPress={() => {
-                        }} style={styles.ripple}>
-                            <View style={styles.menuItem}>
-                                <Icon name="heart-outline" color={greenColor} size={25}/>
-                                <Text style={styles.menuItemText}>My favorites</Text>
-                                <Icon name="chevron-right" color={greenColor} size={25}
-                                      style={{position: 'absolute', right: 15, top: 15}}/>
+                            <TouchableRipple onPress={() => {
+                            }} style={styles.ripple}>
+                                <View style={styles.menuItem}>
+                                    <Icon name="diamond-stone" color={greenColor} size={25}/>
+                                    <Text style={styles.menuItemText}>Get inspired</Text>
+                                    <Icon name="chevron-right" color={greenColor} size={25}
+                                          style={{position: 'absolute', right: 15, top: 15}}/>
 
 
-                            </View>
-                        </TouchableRipple>
-
-                        <TouchableRipple onPress={() => {
-                        }} style={styles.ripple}>
-                            <View style={styles.menuItem}>
-                                <Icon name="file-document-outline" color={greenColor} size={25}/>
-                                <Text style={styles.menuItemText}>Payments</Text>
-                                <Icon name="chevron-right" color={greenColor} size={25}
-                                      style={{position: 'absolute', right: 15, top: 15}}/>
-
-                            </View>
-                        </TouchableRipple>
-                        <Text style={styles.header}>General</Text>
+                                </View>
+                            </TouchableRipple>
+                            <TouchableRipple onPress={() => {
+                            }} style={styles.ripple}>
+                                <View style={styles.menuItem}>
+                                    <Icon name="heart-outline" color={greenColor} size={25}/>
+                                    <Text style={styles.menuItemText}>My favorites</Text>
+                                    <Icon name="chevron-right" color={greenColor} size={25}
+                                          style={{position: 'absolute', right: 15, top: 15}}/>
 
 
-                        <TouchableRipple onPress={() => {
-                            myCustomShare
-                        }} style={styles.ripple}>
-                            <View style={styles.menuItem}>
-                                <Icon name="telegram" color={greenColor} size={25}/>
-                                <Text style={styles.menuItemText}>Invite Friends</Text>
+                                </View>
+                            </TouchableRipple>
 
-                            </View>
-                        </TouchableRipple>
-                        <TouchableRipple onPress={() => {
-                            dispatch(resetProfileState());
-                            userLogout()
-                        }} style={styles.ripple}>
-                            <View style={styles.menuItem}>
-                                <Icon name="logout" color={greenColor} size={25}/>
-                                <Text style={styles.menuItemText}>Log Out</Text>
-                                <Icon name="chevron-right" color={greenColor} size={25}
-                                      style={{position: 'absolute', right: 15, top: 15}}/>
+                            <TouchableRipple onPress={() => {
+                            }} style={styles.ripple}>
+                                <View style={styles.menuItem}>
+                                    <Icon name="file-document-outline" color={greenColor} size={25}/>
+                                    <Text style={styles.menuItemText}>Payments</Text>
+                                    <Icon name="chevron-right" color={greenColor} size={25}
+                                          style={{position: 'absolute', right: 15, top: 15}}/>
 
-                            </View>
-                        </TouchableRipple>
+                                </View>
+                            </TouchableRipple>
+                            <Text style={styles.header}>General</Text>
+
+
+                            <TouchableRipple onPress={() => {
+                                myCustomShare
+                            }} style={styles.ripple}>
+                                <View style={styles.menuItem}>
+                                    <Icon name="telegram" color={greenColor} size={25}/>
+                                    <Text style={styles.menuItemText}>Invite Friends</Text>
+
+                                </View>
+                            </TouchableRipple>
+                            <TouchableRipple onPress={() => {
+                                dispatch(resetProfileState());
+                                userLogout()
+                            }} style={styles.ripple}>
+                                <View style={styles.menuItem}>
+                                    <Icon name="logout" color={greenColor} size={25}/>
+                                    <Text style={styles.menuItemText}>Log Out</Text>
+                                    <Icon name="chevron-right" color={greenColor} size={25}
+                                          style={{position: 'absolute', right: 15, top: 15}}/>
+
+                                </View>
+                            </TouchableRipple>
+                        </View>
                     </View>
                 </View>
-            </View>
-        </SafeAreaView>
+            </View> : null
     );
 
 };

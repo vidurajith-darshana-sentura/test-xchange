@@ -18,7 +18,7 @@ export default (state = initialState, action) => {
         case createOfferRequestActionType.REQUEST_ACTION:
             return {
                 ...state,
-                isCreatingOffer: false,
+                isCreatingOffer: true,
                 createOfferSuccess: null,
                 createOfferFailed: ""
             }

@@ -169,7 +169,7 @@ const Profile = (props) => {
 
                         <TouchableOpacity onPress={() => {
                             // navigation.navigate('ChatNewScreen',{toId: details && details.userDto ? details.userDto.id : "", details: details})
-                            navigation.navigate('ChatNewScreen', {
+                            navigation.navigate('ChatScreen', {
                                 user: {
                                     id:details?.userDto?.id,
                                     partnerId:details?.userDto?.id,

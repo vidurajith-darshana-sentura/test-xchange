@@ -10,6 +10,8 @@ export const showToast = (data) => {
         config['backgroundColor'] = '#DC3545';
     } else if (data.code === 200) {
         config['backgroundColor'] = '#28A745';
+    } else {
+        config['backgroundColor'] = '#F4CA16';
     }
     config['text'] = data.result;
     Snackbar.show(config);

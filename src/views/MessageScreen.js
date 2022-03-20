@@ -99,7 +99,7 @@ const MessageScreen = ({ navigation }) => {
 
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
-            <Card onPress={() => navigation.navigate('ChatNewScreen', { userName: item.userName, user: item })}>
+            <Card onPress={() => navigation.navigate('ChatScreen', { userName: item.userName, user: item })}>
               <UserInfo>
                 <UserImgWrapper>
                   <UserImg source={item?.userImage ? {uri: item.userImage} :require('../assets/users/user-4.jpg')} />

@@ -10,7 +10,6 @@ import ColorScreen from '../views/ColorScreen';
 import MessageScreen from '../views/MessageScreen';
 import MainContainer from './MainTabScreen';
 import ProfileScreen from '../views/ProfileScreen';
-import ChatScreen from '../views/ChatScreen';
 import CreateBuyerRequest from '../views/requests/CreateBuyerRequest';
 import CreateTravellerRequest from '../views/requests/CreateTravellerRequest';
 import CreateShipmentRequest from '../views/requests/CreateShipmentRequest';
@@ -18,9 +17,8 @@ import BuyerPost from '../views/posts/BuyerPost';
 import ShipmentPost from '../views/posts/ShipmentPost.js'
 import TravelPost from '../views/posts/TravelPost'
 import Profile from '../views/Profiles/Profile';
-import CreateBuyerOffer from '../views/offers/CreateBuyerOffer';
-import ChatNewScreen from '../views/ChatNewScreen';
-import CreateSellerOffer from '../views/offers/CreateSellerOffer';
+import ChatScreen from '../views/ChatScreen';
+import CreateOffer from '../views/offers/CreateOffer';
 import HomeStack from "./AppStack/HomeStack";
 import MessageStack from "./AppStack/MessageStack";
 import NotificationScreen from "../views/NotificationScreen";
@@ -30,6 +28,7 @@ import OrderScreen from '../views/orders/OrdersScreen';
 import SubNotification from '../views/NotificationSubScreen';
 import PastOrderScreen from '../views/orders/PastOrderScreen';
 import OrderDetailsScreen from '../views/orders/OrderDetailsScreen';
+import ExternalWebView from "../views/ExternalWebView";
 
 const Stack = createStackNavigator();
 const hide = {headerShown: false};
@@ -55,9 +54,8 @@ const Router = () => {
             <Stack.Screen name="ShipmentRequests" component={ShipmentPost} options={hide}/>
             <Stack.Screen name="TravelRequests" component={TravelPost} options={hide}/>
             <Stack.Screen name="BuyerProfile" component={Profile} options={hide}/>
-            <Stack.Screen name="CreateBuyerOffer" component={CreateBuyerOffer} options={hide}/>
-            <Stack.Screen name="ChatNewScreen" component={ChatNewScreen} options={hide}/>
-            <Stack.Screen name="CreateSellerOffer" component={CreateSellerOffer} options={hide}/>
+            <Stack.Screen name="ChatScreen" component={ChatScreen} options={hide}/>
+            <Stack.Screen name="CreateOffer" component={CreateOffer} options={hide}/>
             <Stack.Screen name="HomeStack" component={HomeStack} options={hide}/>
             <Stack.Screen name="MessageStack" component={MessageStack} options={hide}/>
             <Stack.Screen name="NotificationStack" component={NotificationScreen} options={hide}/>
@@ -68,6 +66,7 @@ const Router = () => {
             <Stack.Screen name="SubNotification" component={SubNotification} options={hide}/>
             <Stack.Screen name="PastOrder" component={PastOrderScreen} options={hide}/>
             <Stack.Screen name="OrderDetails" component={OrderDetailsScreen} options={hide}/>
+            <Stack.Screen name="ExternalWebView" component={ExternalWebView} options={hide}/>
 
         </Stack.Navigator>
     );
